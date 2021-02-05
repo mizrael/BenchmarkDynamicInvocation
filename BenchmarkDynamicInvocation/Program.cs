@@ -63,7 +63,7 @@ namespace BenchmarkDynamicInvocation
 
         private static Results MethodInfoInvoke()
         {
-            var foo = new Foo();
+            object foo = new Foo();
 
             var firstCallTimer = Stopwatch.StartNew();
             Method.Invoke(foo, new[] { (object)1, (object)2, (object)false });
@@ -100,13 +100,13 @@ namespace BenchmarkDynamicInvocation
 
         private static Results DelegateDynamicInvokeInvoke()
         {
-            var foo = new Foo();
+            object foo = new Foo();
 
             var delegateType = Expression.GetDelegateType(typeof(Foo), typeof(int), typeof(int), typeof(bool), typeof(int));
             var @delegate = Delegate.CreateDelegate(delegateType, Method);
             
             var firstCallTimer = Stopwatch.StartNew();
-            @delegate.DynamicInvoke(new[] { (object)foo, (object)1, (object)2, (object)false });
+            @delegate.DynamicInvoke(new[] { foo, (object)1, (object)2, (object)false });
             firstCallTimer.Stop();
 
             var nextCallsTimer = Stopwatch.StartNew();
@@ -121,7 +121,7 @@ namespace BenchmarkDynamicInvocation
 
         private static Results FuncCall()
         {
-            var foo = new Foo();
+            Foo foo = new();
 
             var delegateType = Expression.GetDelegateType(typeof(Foo), typeof(int), typeof(int), typeof(bool), typeof(int));
             var func = (Func<Foo, int, int, bool, int>)Delegate.CreateDelegate(delegateType, Method);
