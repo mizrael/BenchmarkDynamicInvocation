@@ -6,7 +6,7 @@ namespace BenchmarkDynamicInvocation
     {
         public static void Main(string[] args)
         {
-            var summary = BenchmarkRunner.Run<MethodCalls>();
+            var summary = BenchmarkRunner.Run<Benchmarks>();
         }
     }
 }
